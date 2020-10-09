@@ -25,7 +25,6 @@ public class Login {
     private String id;
 
     @Id
-    @NotNull
     private String email;
 
     @NotNull
