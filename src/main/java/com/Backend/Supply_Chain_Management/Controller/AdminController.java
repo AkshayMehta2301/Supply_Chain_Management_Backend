@@ -1,22 +1,12 @@
 package com.Backend.Supply_Chain_Management.Controller;
 
-import com.Backend.Supply_Chain_Management.Constants;
-import com.Backend.Supply_Chain_Management.DAO.AdminDAO;
-import com.Backend.Supply_Chain_Management.DAO.LoginDAO;
-import com.Backend.Supply_Chain_Management.DAO.ManufacturerDAO;
-import com.Backend.Supply_Chain_Management.DAO.Tra_RetDAO;
-import com.Backend.Supply_Chain_Management.Model.Admin;
-import com.Backend.Supply_Chain_Management.Model.CompositeKey.TraRetIdentity;
-import com.Backend.Supply_Chain_Management.Model.Tra_Ret;
-import com.Backend.Supply_Chain_Management.Model.CompositeKey.ManufacturerIdentity;
-import com.Backend.Supply_Chain_Management.Model.Manufacturer;
 import com.Backend.Supply_Chain_Management.Model.User;
 import com.Backend.Supply_Chain_Management.Services.AdminCRUD.AddService;
 import com.Backend.Supply_Chain_Management.Services.AdminCRUD.DeleteService;
 import com.Backend.Supply_Chain_Management.Services.AdminCRUD.FetchService;
 import com.Backend.Supply_Chain_Management.Services.AdminCRUD.UpdateService;
 import com.Backend.Supply_Chain_Management.Services.Generator;
-import com.Backend.Supply_Chain_Management.Util.UserInter;
+import com.Backend.Supply_Chain_Management.UtilInterfaces.UserInter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 

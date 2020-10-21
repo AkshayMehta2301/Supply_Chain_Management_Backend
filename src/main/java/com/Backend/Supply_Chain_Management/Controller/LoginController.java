@@ -23,7 +23,7 @@ public class LoginController {
     @PostMapping
     public Response<Login> validate(@RequestBody Login login) {
         log.info("Got Email : {} and Passwd : {}", login.getEmail(), login.getPasswd());
-        Login data = loginDAO.findByEmailAndPasswd( login.getEmail(), login.getPasswd());
+        Login data = loginDAO.findByEmailAndPasswd(login.getEmail(), login.getPasswd());
         if(data != null)
         {
             Response<Login> response = Response.<Login>builder()

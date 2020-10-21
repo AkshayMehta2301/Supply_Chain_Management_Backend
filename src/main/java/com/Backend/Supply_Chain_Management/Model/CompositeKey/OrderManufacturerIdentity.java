@@ -10,25 +10,24 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
-public class ManufacturerIdentity implements Serializable {
+public class OrderManufacturerIdentity implements Serializable {
 
-    //Component name Which manufacturer producing.
-    @NotNull
     @Column(length = 20)
-    private String component;
+    @NotNull
+    private String orderID;
 
-    //Name of the Manufacturer
+    //Id of the Manufacturer whom order given
+    @Column(length = 10)
     @NotNull
-    @Column(length = 20)
-    private String name;
+    private String manufacturerID;
 
-    //Location of Manufacturer production site.
-    @NotNull
+    //For which component manufacturing order is given.
     @Column(length = 20)
-    private String location;
+    @NotNull
+    private String componentName;
 }

@@ -1,7 +1,7 @@
 package com.Backend.Supply_Chain_Management.DAO;
 
 import com.Backend.Supply_Chain_Management.Model.Admin;
-import com.Backend.Supply_Chain_Management.Util.UserInter;
+import com.Backend.Supply_Chain_Management.UtilInterfaces.UserInter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +17,7 @@ public interface AdminDAO extends JpaRepository<Admin, String> {
 
     @Query("select ad from Admin ad")
     List<UserInter> getAllAdmin();
+
+    @Query("select ad.id from Admin ad where ad.location=:l")
+    String findByLocation( @Param("l") String location);
 }

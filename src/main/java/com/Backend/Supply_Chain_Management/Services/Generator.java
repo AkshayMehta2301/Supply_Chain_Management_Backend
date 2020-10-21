@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class Generator {
-    public String generateID()
+    public String generateID(int length)
     {
         String Id = "";
         log.info("ID generation started.");
         String generator = "0123456789";
         int Index = 0;
-        for( int i = 0; i < 7; i++)
+        for( int i = 0; i < length; i++)
         {
              Index = (int)(Math.random()*10);
              Id = Id + generator.charAt(Index);
@@ -21,8 +21,10 @@ public class Generator {
         return Id;
     }
 
-    public static String generateEmail(String name)
+    public String generateEmail(String name)
     {
         return name+"@scm.com";
     }
+
+
 }

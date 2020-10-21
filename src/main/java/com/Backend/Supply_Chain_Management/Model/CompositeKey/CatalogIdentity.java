@@ -7,23 +7,20 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
-public class TraRetIdentity implements Serializable {
+public class CatalogIdentity implements Serializable {
 
-    //Name of the Transporter.
-    @NotNull
+    //Name of the Product for which order is placed.
     @Column(length = 20)
-    private String name;
+    private String product;
 
-    //Location of Transporter Office.
-    @NotNull
+    //Component name which are needed to manufacture product.
     @Column(length = 20)
-    private String location;
+    private String component;
 }

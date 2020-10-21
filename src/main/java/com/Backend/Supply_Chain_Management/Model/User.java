@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
-import javax.validation.constraints.Size;
+import javax.persistence.Column;
 
 @Data
 @AllArgsConstructor
@@ -14,13 +14,15 @@ import javax.validation.constraints.Size;
 public class User {
 
     @Nullable
+    @Column(length = 20)
     private String name;
 
     @Nullable
+    @Column(length = 15)
     private String type;
 
     @Nullable
-    @Size(max = 20)
+    @Column(length = 20)
     private String location;
 
     @Nullable

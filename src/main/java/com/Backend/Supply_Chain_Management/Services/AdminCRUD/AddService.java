@@ -5,7 +5,11 @@ import com.Backend.Supply_Chain_Management.DAO.AdminDAO;
 import com.Backend.Supply_Chain_Management.DAO.LoginDAO;
 import com.Backend.Supply_Chain_Management.DAO.ManufacturerDAO;
 import com.Backend.Supply_Chain_Management.DAO.Tra_RetDAO;
-import com.Backend.Supply_Chain_Management.Model.*;
+import com.Backend.Supply_Chain_Management.Model.User;
+import com.Backend.Supply_Chain_Management.Model.Manufacturer;
+import com.Backend.Supply_Chain_Management.Model.Tra_Ret;
+import com.Backend.Supply_Chain_Management.Model.Login;
+import com.Backend.Supply_Chain_Management.Model.Admin;
 import com.Backend.Supply_Chain_Management.Model.CompositeKey.ManufacturerIdentity;
 import com.Backend.Supply_Chain_Management.Model.CompositeKey.TraRetIdentity;
 import com.Backend.Supply_Chain_Management.Services.Generator;
@@ -33,8 +37,8 @@ public class AddService {
     public String addUser(User user)
     {
         String response = "";
-        String id = user.getType().substring(0,3) + generator.generateID();
-        String email = Generator.generateEmail(user.getName());
+        String id = user.getType().substring(0,3) + generator.generateID(7);
+        String email = generator.generateEmail(user.getName());
         if( user.getType().equals( Constants.Manufacturer_type))
         {
             Manufacturer manufacturer = Manufacturer.builder()

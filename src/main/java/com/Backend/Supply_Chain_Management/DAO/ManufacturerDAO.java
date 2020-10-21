@@ -2,7 +2,7 @@ package com.Backend.Supply_Chain_Management.DAO;
 
 import com.Backend.Supply_Chain_Management.Model.CompositeKey.ManufacturerIdentity;
 import com.Backend.Supply_Chain_Management.Model.Manufacturer;
-import com.Backend.Supply_Chain_Management.Util.UserInter;
+import com.Backend.Supply_Chain_Management.UtilInterfaces.UserInter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +23,8 @@ public interface ManufacturerDAO extends JpaRepository<Manufacturer, Manufacture
 
     @Query("select man from Manufacturer man")
     List<UserInter> getAllManufacturer();
+
+    //It will further Enhanced when we have more then one manufacturer with Similar Component.
+    @Query("select man.id from Manufacturer man where man.manufacturerIdentity.component=:c")
+    String findByComponent( @Param("c") String Component);
 }

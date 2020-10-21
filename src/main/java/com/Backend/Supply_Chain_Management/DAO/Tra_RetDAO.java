@@ -2,7 +2,7 @@ package com.Backend.Supply_Chain_Management.DAO;
 
 import com.Backend.Supply_Chain_Management.Model.CompositeKey.TraRetIdentity;
 import com.Backend.Supply_Chain_Management.Model.Tra_Ret;
-import com.Backend.Supply_Chain_Management.Util.UserInter;
+import com.Backend.Supply_Chain_Management.UtilInterfaces.UserInter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

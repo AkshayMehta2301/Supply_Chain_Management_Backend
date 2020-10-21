@@ -4,7 +4,7 @@ import com.Backend.Supply_Chain_Management.Constants;
 import com.Backend.Supply_Chain_Management.DAO.AdminDAO;
 import com.Backend.Supply_Chain_Management.DAO.ManufacturerDAO;
 import com.Backend.Supply_Chain_Management.DAO.Tra_RetDAO;
-import com.Backend.Supply_Chain_Management.Util.UserInter;
+import com.Backend.Supply_Chain_Management.UtilInterfaces.UserInter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
