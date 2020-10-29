@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
+@CrossOrigin
 @RequestMapping("/api/login")
 public class LoginController {
 

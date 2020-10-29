@@ -23,6 +23,10 @@ public class Order_Manufacturer {
     @EmbeddedId
     private OrderManufacturerIdentity orderManufacturerIdentity;
 
+    //Admin who has given Order to Manufacturer to manufacture component.
+    @Column(length = 10)
+    private String adminID;
+
     //Number of Pieces of Component should be produced.
     @Column(length = 9)
     @NotNull

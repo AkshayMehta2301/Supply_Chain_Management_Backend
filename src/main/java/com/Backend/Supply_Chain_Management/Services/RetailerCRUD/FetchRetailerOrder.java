@@ -1,4 +1,4 @@
-package com.Backend.Supply_Chain_Management.Services;
+package com.Backend.Supply_Chain_Management.Services.RetailerCRUD;
 
 import com.Backend.Supply_Chain_Management.DAO.OrderDetailsDAO;
 import com.Backend.Supply_Chain_Management.DAO.Order_RetailerDAO;
@@ -12,13 +12,14 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class FetchOrder {
+public class FetchRetailerOrder {
 
     @Autowired
     Order_RetailerDAO order_retailerDAO;
     @Autowired
     OrderDetailsDAO orderDetailsDAO;
 
+    //This utility method will retrieve all retailer orders.
     public List<Order_Retailer> fetch(String retailerID)
     {
         List<Order_Retailer> orders = order_retailerDAO.findAllOrder( retailerID);
@@ -26,6 +27,7 @@ public class FetchOrder {
         return orders;
     }
 
+    //This utility method will retrieve details for given orders.
     public List<OrderDetails> fetchOrderDetails(String orderID)
     {
         List<OrderDetails> orderDetails = orderDetailsDAO.findOrderDetails( orderID);

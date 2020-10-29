@@ -1,4 +1,4 @@
-package com.Backend.Supply_Chain_Management.Services;
+package com.Backend.Supply_Chain_Management.Services.RetailerCRUD;
 
 import com.Backend.Supply_Chain_Management.Constants;
 import com.Backend.Supply_Chain_Management.DAO.AdminDAO;
@@ -10,6 +10,7 @@ import com.Backend.Supply_Chain_Management.Model.Orders.BaseOrder;
 import com.Backend.Supply_Chain_Management.Model.Orders.Catalog;
 import com.Backend.Supply_Chain_Management.Model.Orders.OrderDetails;
 import com.Backend.Supply_Chain_Management.Model.Orders.Order_Retailer;
+import com.Backend.Supply_Chain_Management.Services.Generator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,8 @@
-package com.Backend.Supply_Chain_Management.Services;
+package com.Backend.Supply_Chain_Management.Services.RetailerCRUD;
 
 import com.Backend.Supply_Chain_Management.DAO.ManufacturerDAO;
 import com.Backend.Supply_Chain_Management.DAO.Order_ManufacturerDAO;
+import com.Backend.Supply_Chain_Management.DAO.Order_RetailerDAO;
 import com.Backend.Supply_Chain_Management.DAO.WarehouseComponentDAO;
 import com.Backend.Supply_Chain_Management.Model.CompositeKey.OrderManufacturerIdentity;
 import com.Backend.Supply_Chain_Management.Model.Orders.Catalog;
@@ -23,6 +24,8 @@ public class AddOrderUtility {
     ManufacturerDAO manufacturerDAO;
     @Autowired
     Order_ManufacturerDAO order_manufacturerDAO;
+    @Autowired
+    Order_RetailerDAO order_retailerDAO;
 
     public void orderToManufacturer(String orderID, List<Catalog> catalogs, int piece)
     {
@@ -31,22 +34,24 @@ public class AddOrderUtility {
         for(Catalog c : catalogs)
         {
             int neededCount = piece * c.getCount();
-            log.info("Needed Component:{} of are:{}.",
+            log.info("Needed Component of :{} are:{}.",
                     c.getCatalogIdentity().getComponent(), neededCount);
             //In Further enhancement we will add warehouses at different locations, so
             //that part of logic will also added.(v2)
             int availableCount = warehouseComponentDAO.findByComponentName( c.getCatalogIdentity().getComponent());
+            log.info("Available Component of :{} are:{}.",
+                    c.getCatalogIdentity().getComponent(), availableCount);
             if(neededCount > availableCount && availableCount >= 0)
             {
                 neededCount = neededCount - availableCount;
-                WarehouseComponent warehouseComponent = WarehouseComponent.builder()
-                                                        .componentName( c.getCatalogIdentity().getComponent())
-                                                        .availableCount(0)
-                                                        .build();
-                warehouseComponentDAO.save(warehouseComponent);
-                //Here we have to add order for transporter to move component
-                //from wareHouse to ProductionLine.
-                //
+                if(availableCount > 0)
+                {
+                    WarehouseComponent warehouseComponent = WarehouseComponent.builder()
+                            .componentName( c.getCatalogIdentity().getComponent())
+                            .availableCount(0)
+                            .build();
+                    warehouseComponentDAO.save(warehouseComponent);
+                }
                 //In further enhancement, we have to add optimizer which will do some
                 //optimization based on ratings of each manufacturer for similar
                 //component.(v2)
@@ -61,6 +66,7 @@ public class AddOrderUtility {
                                     .orderID( orderID)
                                     .build())
                             .isCompleted(false)
+                            .adminID( order_retailerDAO.findAdminIDByOrderID( orderID))
                             .amount( neededCount)
                             .build();
                 order_manufacturerDAO.save( order_manufacturer);
@@ -72,14 +78,12 @@ public class AddOrderUtility {
             {
                 log.info("Component:{} :{} piece needed whereas :{} piece available at WareHouse",
                         c.getCatalogIdentity().getComponent(), neededCount, availableCount);
-                availableCount = availableCount - neededCount;
+                int remainderCount = availableCount - neededCount;
                 WarehouseComponent warehouseComponent = WarehouseComponent.builder()
                         .componentName( c.getCatalogIdentity().getComponent())
-                        .availableCount( availableCount)
+                        .availableCount( remainderCount)
                         .build();
                 warehouseComponentDAO.save( warehouseComponent);
-                //Here we have to add order for transporter to move component
-                //from wareHouse to ProductionLine.
                 //Here We have to call re-order level Logic.
                 //Further we can also add Notification kind logic.(tra)(v2)
             }
