@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface WarehouseComponentDAO extends JpaRepository<WarehouseComponent, String> {
 
     //This method will further enhanced when we have more then one warehouse at
-    // different location.
+    //different location.
     @Query("select war.availableCount from WarehouseComponent war where war.componentName =:c")
     int findByComponentName( @Param("c") String componentName);
 }

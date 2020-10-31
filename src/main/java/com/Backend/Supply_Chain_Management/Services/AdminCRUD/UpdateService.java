@@ -3,11 +3,9 @@ package com.Backend.Supply_Chain_Management.Services.AdminCRUD;
 import com.Backend.Supply_Chain_Management.Constants;
 import com.Backend.Supply_Chain_Management.DAO.AdminDAO;
 import com.Backend.Supply_Chain_Management.DAO.ManufacturerDAO;
-import com.Backend.Supply_Chain_Management.DAO.Tra_RetDAO;
-import com.Backend.Supply_Chain_Management.Model.Admin;
-import com.Backend.Supply_Chain_Management.Model.Manufacturer;
-import com.Backend.Supply_Chain_Management.Model.Tra_Ret;
-import com.Backend.Supply_Chain_Management.Model.User;
+import com.Backend.Supply_Chain_Management.DAO.RetailerDAO;
+import com.Backend.Supply_Chain_Management.DAO.TransporterDAO;
+import com.Backend.Supply_Chain_Management.Model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,7 +17,9 @@ public class UpdateService {
     @Autowired
     private ManufacturerDAO manufacturerDAO;
     @Autowired
-    private Tra_RetDAO tra_retDAO;
+    private RetailerDAO retailerDAO;
+    @Autowired
+    private TransporterDAO transporterDAO;
     @Autowired
     private AdminDAO adminDAO;
 
@@ -54,27 +54,51 @@ public class UpdateService {
                 response = Constants.FAILURE;
             }
         }
-        else if( id.contains("tra") || id.contains("ret"))
+        else if( id.contains("tra"))
         {
-            Tra_Ret tra_ret = tra_retDAO.findByUniqueId( id);
-            if(tra_ret != null)
+            Transporter transporter = transporterDAO.findByUniqueId( id);
+            if(transporter != null)
             {
-                log.info("Fetched Tra_Ret with given ID : {}", tra_ret);
+                log.info("Fetched Transporter with given ID : {}", transporter);
                 if(user.getLocation() != null)
                 {
-                    tra_ret.getTraRetIdentity().setLocation( user.getLocation());
+                    transporter.getTransporterIdentity().setLocation( user.getLocation());
                 }
                 if(user.getName() != null)
                 {
-                    tra_ret.getTraRetIdentity().setName( user.getName());
+                    transporter.getTransporterIdentity().setName( user.getName());
                 }
-                tra_retDAO.save(tra_ret);
+                transporterDAO.save(transporter);
                 response = Constants.SUCCESS;
-                log.info("Updated Tra_Ret : {}", tra_ret);
+                log.info("Updated Transporter : {}", transporter);
             }
             else
             {
-                log.info("No Tra_Ret Exist with given ID : {}", id);
+                log.info("No Transporter Exist with given ID : {}", id);
+                response = Constants.FAILURE;
+            }
+        }
+        else if( id.contains("ret"))
+        {
+            Retailer retailer = retailerDAO.findByUniqueId( id);
+            if( retailer != null)
+            {
+                log.info("Fetched Retailer with given ID : {}", retailer);
+                if(user.getLocation() != null)
+                {
+                    retailer.getRetailerIdentity().setLocation( user.getLocation());
+                }
+                if(user.getName() != null)
+                {
+                    retailer.getRetailerIdentity().setName( user.getName());
+                }
+                retailerDAO.save(retailer);
+                response = Constants.SUCCESS;
+                log.info("Updated Retailer : {}", retailer);
+            }
+            else
+            {
+                log.info("No Retailer Exist with given ID : {}", id);
                 response = Constants.FAILURE;
             }
         }

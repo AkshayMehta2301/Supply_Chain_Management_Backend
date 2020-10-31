@@ -1,17 +1,11 @@
 package com.Backend.Supply_Chain_Management.Services.AdminCRUD;
 
 import com.Backend.Supply_Chain_Management.Constants;
-import com.Backend.Supply_Chain_Management.DAO.AdminDAO;
-import com.Backend.Supply_Chain_Management.DAO.LoginDAO;
-import com.Backend.Supply_Chain_Management.DAO.ManufacturerDAO;
-import com.Backend.Supply_Chain_Management.DAO.Tra_RetDAO;
-import com.Backend.Supply_Chain_Management.Model.User;
-import com.Backend.Supply_Chain_Management.Model.Manufacturer;
-import com.Backend.Supply_Chain_Management.Model.Tra_Ret;
-import com.Backend.Supply_Chain_Management.Model.Login;
-import com.Backend.Supply_Chain_Management.Model.Admin;
+import com.Backend.Supply_Chain_Management.DAO.*;
+import com.Backend.Supply_Chain_Management.Model.*;
 import com.Backend.Supply_Chain_Management.Model.CompositeKey.ManufacturerIdentity;
-import com.Backend.Supply_Chain_Management.Model.CompositeKey.TraRetIdentity;
+import com.Backend.Supply_Chain_Management.Model.CompositeKey.RetailerIdentity;
+import com.Backend.Supply_Chain_Management.Model.CompositeKey.TransporterIdentity;
 import com.Backend.Supply_Chain_Management.Services.Generator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +18,9 @@ import java.util.List;
 public class AddService {
 
     @Autowired
-    private Tra_RetDAO tra_retDAO;
+    private RetailerDAO retailerDAO;
+    @Autowired
+    private TransporterDAO transporterDAO;
     @Autowired
     private ManufacturerDAO manufacturerDAO;
     @Autowired
@@ -72,34 +68,65 @@ public class AddService {
                 response = Constants.FAILURE;
             }
         }
-        else if( user.getType().equals( Constants.Retailer_type) || user.getType().equals( Constants.Transporter_type))
+        else if( user.getType().equals( Constants.Transporter_type))
         {
-            Tra_Ret tra_ret = Tra_Ret.builder()
+            Transporter transporter = Transporter.builder()
                                 .id(id)
                                 .email( email)
-                                .traRetIdentity(TraRetIdentity.builder()
+                                .transporterIdentity(TransporterIdentity.builder()
                                         .location( user.getLocation())
                                         .name(user.getName())
                                         .build())
                                 .build();
-            List<Tra_Ret> tra_Rets = tra_retDAO
-                    .findByNameAndLocation( tra_ret.getTraRetIdentity().getName(),
-                            tra_ret.getTraRetIdentity().getLocation());
-            if(tra_Rets.isEmpty() == true)
+            List<Transporter> transporters = transporterDAO
+                    .findByNameAndLocation( transporter.getTransporterIdentity().getName(),
+                            transporter.getTransporterIdentity().getLocation());
+            if(transporters.isEmpty() == true)
             {
-                tra_retDAO.save(tra_ret);
-                Login tra_RetLogin = Login.builder()
-                        .email( tra_ret.getEmail())
+                transporterDAO.save( transporter);
+                Login transporterLogin = Login.builder()
+                        .email( transporter.getEmail())
                         .passwd("12344321")
-                        .id( tra_ret.getId())
+                        .id( transporter.getId())
                         .build();
-                loginDAO.save( tra_RetLogin);
-                log.info("Tra_Ret added : {}", tra_ret);
+                loginDAO.save( transporterLogin);
+                log.info("Transporter added : {}", transporter);
                 response = Constants.SUCCESS;
             }
             else
             {
-                log.info("Tra_Ret already Exists");
+                log.info("Transporter already Exists");
+                response = Constants.FAILURE;
+            }
+        }
+        else if( user.getType().equals( Constants.Retailer_type))
+        {
+            Retailer retailer = Retailer.builder()
+                    .id(id)
+                    .email( email)
+                    .retailerIdentity(RetailerIdentity.builder()
+                            .location( user.getLocation())
+                            .name(user.getName())
+                            .build())
+                    .build();
+            List<Retailer> retailers = retailerDAO
+                    .findByNameAndLocation( retailer.getRetailerIdentity().getName(),
+                            retailer.getRetailerIdentity().getLocation());
+            if(retailers.isEmpty() == true)
+            {
+                retailerDAO.save(retailer);
+                Login retailerLogin = Login.builder()
+                        .email( retailer.getEmail())
+                        .passwd("12344321")
+                        .id( retailer.getId())
+                        .build();
+                loginDAO.save( retailerLogin);
+                log.info("Tra_Ret added : {}", retailer);
+                response = Constants.SUCCESS;
+            }
+            else
+            {
+                log.info("Retailer already Exists");
                 response = Constants.FAILURE;
             }
         }

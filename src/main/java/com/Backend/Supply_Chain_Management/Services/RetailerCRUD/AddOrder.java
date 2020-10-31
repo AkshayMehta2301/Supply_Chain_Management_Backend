@@ -41,7 +41,7 @@ public class AddOrder {
         if(!orders.isEmpty())
         {
             String orderID = generator.generateID(20);
-            String adminID = adminDAO.findByLocation( location);
+            String adminID = adminDAO.findIdByLocation( location);
             Order_Retailer order_retailer = Order_Retailer.builder()
                                     .orderID( orderID)
                                     .retailerID( retailerID)

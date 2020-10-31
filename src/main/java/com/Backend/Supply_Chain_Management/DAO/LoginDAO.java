@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LoginDAO extends JpaRepository<Login, String> {
 
+    //This method will validate by e-mail and password.
     Login findByEmailAndPasswd(String email, String passwd);
 }

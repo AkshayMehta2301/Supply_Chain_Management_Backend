@@ -1,13 +1,11 @@
 package com.Backend.Supply_Chain_Management.Services.AdminCRUD;
 
 import com.Backend.Supply_Chain_Management.Constants;
-import com.Backend.Supply_Chain_Management.DAO.AdminDAO;
-import com.Backend.Supply_Chain_Management.DAO.LoginDAO;
-import com.Backend.Supply_Chain_Management.DAO.ManufacturerDAO;
-import com.Backend.Supply_Chain_Management.DAO.Tra_RetDAO;
+import com.Backend.Supply_Chain_Management.DAO.*;
 import com.Backend.Supply_Chain_Management.Model.Admin;
 import com.Backend.Supply_Chain_Management.Model.Manufacturer;
-import com.Backend.Supply_Chain_Management.Model.Tra_Ret;
+import com.Backend.Supply_Chain_Management.Model.Retailer;
+import com.Backend.Supply_Chain_Management.Model.Transporter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,7 +17,9 @@ public class DeleteService {
     @Autowired
     private ManufacturerDAO manufacturerDAO;
     @Autowired
-    private Tra_RetDAO tra_retDAO;
+    private RetailerDAO retailerDAO;
+    @Autowired
+    private TransporterDAO transporterDAO;
     @Autowired
     private AdminDAO adminDAO;
     @Autowired
@@ -44,19 +44,35 @@ public class DeleteService {
                 response = Constants.FAILURE;
             }
         }
-        else if( id.substring(0, 3).equals("tra") || id.substring(0, 3).equals("ret") )
+        else if( id.substring(0, 3).equals("tra"))
         {
-            Tra_Ret traRet = tra_retDAO.findByUniqueId( id);
-            if(traRet != null)
+            Transporter transporter = transporterDAO.findByUniqueId( id);
+            if(transporter != null)
             {
-                tra_retDAO.delete( traRet);
-                loginDAO.deleteById( traRet.getId());
-                log.info("Removed Tra_Ret : {}", traRet);
+                transporterDAO.delete( transporter);
+                loginDAO.deleteById( transporter.getId());
+                log.info("Removed Transporter : {}", transporter);
                 response = Constants.SUCCESS;
             }
             else
             {
-                log.info("No Tra_Ret exist with given ID : {}", id);
+                log.info("No Transporter exist with given ID : {}", id);
+                response = Constants.FAILURE;
+            }
+        }
+        else if( id.substring(0, 3).equals("ret"))
+        {
+            Retailer retailer = retailerDAO.findByUniqueId( id);
+            if(retailer != null)
+            {
+                retailerDAO.delete( retailer);
+                loginDAO.deleteById( retailer.getId());
+                log.info("Removed Retailer : {}", retailer);
+                response = Constants.SUCCESS;
+            }
+            else
+            {
+                log.info("No Retailer exist with given ID : {}", id);
                 response = Constants.FAILURE;
             }
         }

@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface CatalogDAO extends JpaRepository<Catalog, CatalogIdentity> {
 
+    //This method will return all components needed to manufacture given product.
     @Query("select cata from Catalog cata where cata.catalogIdentity.product = :p")
     List<Catalog> findByProductName(@Param("p") String product);
 }

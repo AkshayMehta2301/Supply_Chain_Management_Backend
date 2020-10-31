@@ -15,14 +15,14 @@ import java.io.Serializable;
 @Data
 @Builder
 @Embeddable
-public class TraRetIdentity implements Serializable {
+public class RetailerIdentity implements Serializable {
 
-    //Name of the Transporter.
+    //Name of the Retailer.
     @NotNull
     @Column(length = 20)
     private String name;
 
-    //Location of Transporter Office.
+    //Location of Retailer Office.
     @NotNull
     @Column(length = 20)
     private String location;
