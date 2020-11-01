@@ -19,11 +19,19 @@ public class FetchRetailerOrder {
     @Autowired
     OrderDetailsDAO orderDetailsDAO;
 
-    //This utility method will retrieve all retailer orders.
-    public List<Order_Retailer> fetch(String retailerID)
+    //This utility method will retrieve all running orders of retailer.
+    public List<Order_Retailer> fetchRunning(String retailerID)
     {
-        List<Order_Retailer> orders = order_retailerDAO.findAllOrder( retailerID);
-        log.info("Orders of  retailer : {} are : {}",retailerID, orders);
+        List<Order_Retailer> orders = order_retailerDAO.findAllRunningOrderOfRetailer( retailerID);
+        log.info("Running Orders of  retailer : {} are : {}",retailerID, orders);
+        return orders;
+    }
+
+    //This utility method will retrieve all completed orders of retailer.
+    public List<Order_Retailer> fetchCompleted(String retailerID)
+    {
+        List<Order_Retailer> orders = order_retailerDAO.findAllCompletedOrderOfRetailer( retailerID);
+        log.info("Completed Orders of  retailer : {} are : {}",retailerID, orders);
         return orders;
     }
 

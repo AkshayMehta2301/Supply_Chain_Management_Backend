@@ -14,8 +14,14 @@ import java.util.List;
 public interface Order_RetailerDAO extends JpaRepository<Order_Retailer, String> {
 
     //This method will fetch all Order of given retailer.
-    @Query("select ord from Order_Retailer ord where ord.retailerID=:i")
-    List<Order_Retailer> findAllOrder( @Param("i") String retailerID);
+    @Query("select ord from Order_Retailer ord where ord.retailerID=:i and " +
+            "ord.isCompleted=false")
+    List<Order_Retailer> findAllRunningOrderOfRetailer( @Param("i") String retailerID);
+
+    //This method will fetch all Order of given retailer.
+    @Query("select ord from Order_Retailer ord where ord.retailerID=:i and " +
+            "ord.isCompleted=true")
+    List<Order_Retailer> findAllCompletedOrderOfRetailer( @Param("i") String retailerID);
 
     //This method will give adminID by orderID.
     @Query("select ord.adminID from Order_Retailer ord where ord.orderID=:i")
